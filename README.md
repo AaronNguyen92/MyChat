@@ -3,11 +3,11 @@ Multiple Client - Single Server Chat Application (Socket Programming)
 # Screen Shots
 **Starting Server & Tracking history of clients' activities**<br><br>
 ![Client SignUp blank](https://live.staticflickr.com/65535/51075434562_6aee56c658.jpg)
-<br>
+<br><br>
 **Signing Up Clients' Chatting Request - User choose Avartar from PC and username**<br><br>
 ![Client SignUp blank](https://live.staticflickr.com/65535/51075332506_72b829025a_n.jpg)
 ![Client SignUp filled in](https://live.staticflickr.com/65535/51006151515_82828f126a_n.jpg)
-<br>
+<br><br>
 **Chatting Window for users can interact with each other**<br><br>
 ![Client Main Interface](27.03.2021_14.20.12_REC.png)
 # Demo
