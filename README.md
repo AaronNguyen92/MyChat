@@ -6,4 +6,6 @@ Multiple Client - Single Server Chat Application
 ![Client SignUp blank](https://live.staticflickr.com/65535/51075332506_72b829025a_n.jpg)
 ![Client SignUp filled in](https://live.staticflickr.com/65535/51006151515_82828f126a_n.jpg)
 <br>
-![Client Main Interface](https://live.staticflickr.com/65535/51075332461_9e7c0367df_n.jpg)
+![Client Main Interface](27.03.2021_14.20.12_REC.png)
+<br>
+![ALT](27.03.2021_14.20.12_REC.png)
