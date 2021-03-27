@@ -1,7 +1,7 @@
 # MyChat
 Multiple Client - Single Server Chat Application (Socket Programming)
 # Screen Shots
-![Server Image](https://live.staticflickr.com/65535/51075434562_6aee56c658.jpg)
+<span style="text-align: center;"> ![Server Image](https://live.staticflickr.com/65535/51075434562_6aee56c658.jpg) </span>
 <br>
 ![Client SignUp blank](https://live.staticflickr.com/65535/51075332506_72b829025a_n.jpg)
 ![Client SignUp filled in](https://live.staticflickr.com/65535/51006151515_82828f126a_n.jpg)
