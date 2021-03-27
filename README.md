@@ -6,6 +6,7 @@ Multiple Client - Single Server Chat Application (Socket Programming)
 <br><br>
 **Signing Up Clients' Chatting Request - User choose Avartar from PC and username**<br><br>
 ![Client SignUp blank](https://live.staticflickr.com/65535/51075332506_72b829025a_n.jpg)
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 ![Client SignUp filled in](https://live.staticflickr.com/65535/51006151515_82828f126a_n.jpg)
 <br><br>
 **Chatting Window for users can interact with each other**<br><br>
