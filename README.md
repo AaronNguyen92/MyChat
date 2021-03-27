@@ -8,4 +8,4 @@ Multiple Client - Single Server Chat Application
 <br>
 ![Client Main Interface](27.03.2021_14.20.12_REC.png)
 <br>
-![ALT](27.03.2021_14.20.12_REC.png)
+![ALT](ezgif.com-gif-maker (3).gif)
