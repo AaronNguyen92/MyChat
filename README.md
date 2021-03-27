@@ -1,5 +1,5 @@
 # MyChat
-Multiple Client - Single Server Chat Application (Socket Programming)
+Multiple Client - Single Server Chat Application (Socket Programming + Java Swing)
 # Screen Shots
 **Starting Server & Tracking history of clients' activities**<br><br>
 ![Client SignUp blank](https://live.staticflickr.com/65535/51075434562_6aee56c658.jpg)
