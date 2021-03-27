@@ -1,5 +1,5 @@
 # MyChat
-Multiple Client - Single Server Chat Application
+Multiple Client - Single Server Chat Application (Socket Programming)
 # Screen Shots
 ![Server Image](https://live.staticflickr.com/65535/51075434562_6aee56c658.jpg)
 <br>
