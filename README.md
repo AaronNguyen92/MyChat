@@ -1,5 +1,11 @@
 # MyChat
 Multiple Client - Single Server Chat Application (Socket Programming + Java Swing)
+# Instruction
+**Step 1:** Starting Chatting Server
+<br><br>
+**Step 2:** Signing up new user to participate in Chat Room
+<br><br>
+**Step 3:** Ready to chat with other users through your chatting window
 # Screen Shots
 **Starting Server & Tracking history of clients' activities**<br><br>
 ![Client SignUp blank](https://live.staticflickr.com/65535/51075434562_6aee56c658.jpg)
