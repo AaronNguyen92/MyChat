@@ -17,3 +17,6 @@ Multiple Client - Single Server Chat Application (Socket Programming + Java Swin
 <br><br>
 **Figure 2**<br><br>
 ![Chat-demo2](https://64.media.tumblr.com/7d6723f51f7db60948188f756ba641d7/e332fb78fa77484f-2c/s1280x1920/8387b9b10af3f8f7a27a5a455ba3a20a1cba7e4b.gif)
+<br><br>
+**Figure 3**<br><br>
+![Chat-demo3](https://64.media.tumblr.com/b4c9bc1e6a5c73e6b58d5bd556d1b7f6/c136217669f74ea1-97/s1280x1920/04bcb5f141f507ee899eff6aefe2139d89f54aa7.gif)
