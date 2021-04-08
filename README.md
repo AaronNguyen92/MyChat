@@ -1,7 +1,7 @@
 # MyChat
 Multiple Client - Single Server Chat Application (Socket Programming + Java Swing)
 # Diagram:
-![Chat Diagram](chat diagram.png)
+![Chat Diagram](chat_diagram.png)
 # Instruction
 **Step 1:** Starting Chatting Server
 <br><br>
