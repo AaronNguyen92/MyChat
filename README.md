@@ -1,7 +1,7 @@
 # MyChat
-Multiple Client - Single Server Chat Application (Socket Programming + Java Swing)
+Multiple Client - Single Server Chat Application (Socket Programming + Java Swing + Multi-Threading)
 # Diagram:
-**Update(): helps update List of clients who joined in connection.**<br><br><br>
+**Update(): helps update List of clients who joined in connection to Server.**<br><br><br>
 ![Chat Diagram](chat_diagram.png)
 # Instruction
 **Step 1:** Starting Chatting Server
