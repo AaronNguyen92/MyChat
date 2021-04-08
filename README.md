@@ -1,5 +1,6 @@
 # MyChat
-Multiple Client - Single Server Chat Application (Socket Programming + Java Swing + Multi-Threading)
+Multiple Client - Single Server Chat Application (Socket Programming + Java Swing + Multi-Threading)<br>
+<a href="https://topdev.vn/blog/xay-dung-ung-dung-client-server-voi-socket-trong-java/#xay-dung-chuong-trinh-client-server-o-che-do-co-noi-ket-tcp">More refer to here</a>
 # Diagram:
 **Update(): helps update List of clients who joined in connection to Server.**<br><br><br>
 ![Chat Diagram](chat_diagram.png)
