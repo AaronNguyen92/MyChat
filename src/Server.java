@@ -17,6 +17,7 @@ import javax.swing.JOptionPane;
 
 public class Server extends javax.swing.JFrame {
     ServerSocket ss;
+    //Tập các client tham gia kết nối
     HashMap clientcoll = new HashMap();
     /**
      * Creates new form Server
@@ -32,7 +33,7 @@ public class Server extends javax.swing.JFrame {
         }
     }
 
-   
+    //Xử lý việc chấp nhận yêu cầu của client
     class ClientAccept extends Thread{
         public void run(){
             while(true){
@@ -40,6 +41,8 @@ public class Server extends javax.swing.JFrame {
                     Socket s = ss.accept();
                                       
                     String i1 = new DataInputStream(s.getInputStream()).readUTF();
+                    //Thông báo cho client nếu client đã tham gia kết nối, đã chứa trong Map.
+                    //Nếu không thì tham vào Map và tạo các kết nối mới
                     if(clientcoll.containsKey(i1)){
                         DataOutputStream dout = new DataOutputStream(s.getOutputStream());
                         dout.writeUTF("You Are Already Registered ....!!");
@@ -59,9 +62,10 @@ public class Server extends javax.swing.JFrame {
         }
     }
     
+    //tạo ra 1 thread khác để xử lý việc đọc tin nhắn từ client
     class MsgRead extends Thread{
         Socket s;
-        String ID;
+        String ID;//ID của client gửi thông điệp
         
         MsgRead(Socket s, String ID) {
             this.s = s;
@@ -72,17 +76,23 @@ public class Server extends javax.swing.JFrame {
             while(!clientcoll.isEmpty()){
                 try {
                     String i = new DataInputStream(s.getInputStream()).readUTF();
+                    //đọc mã thông báo từ client
+                    //hjgfshudssbjj89098AFCB quy ước là mã xóa bỏ kết nối từ client
                     if(i.equals("hjgfshudssbjj89098AFCB")){
                         clientcoll.remove(ID);
                         msgBox.append(ID + ": removed!\n");
+                        //cập nhật lại danh sách các client tham gia
                         new PrepareClientList().start();
                         
                         Set<String> k = clientcoll.keySet();
                         Iterator itr = k.iterator();
+                        //Duyệt qua danh sách các client
                         while(itr.hasNext()){
                             String key = (String)itr.next();
                             if(!key.equalsIgnoreCase(ID)){
                                 try {
+                                    //thông báo rằng client với id này đã rời khỏi cuộc trò chuyện
+                                    //Mã thông báo bao gồm id + "hjgfshudssbjj89098AFCB"(mã thông báo rời khỏi)
                                     new DataOutputStream(((Socket)clientcoll.get(key)).getOutputStream()).writeUTF(ID + " " + i);
                                 } catch (Exception e) {
                                     clientcoll.remove(key);
@@ -92,12 +102,15 @@ public class Server extends javax.swing.JFrame {
                             }
                         } 
                     }
+                    //mã thông báo "#434556@@@@@554999@@" được thêm vào để thông báo đây là chuỗi tin nhắn giữa các client
+                    //Nó được thêm vào đầu của chuỗi tin nhắn
                     else if(i.contains("#434556@@@@@554999@@")){
                         i = i.substring(20);
                         StringTokenizer st = new StringTokenizer(i,":");
-                        String id = st.nextToken();
-                        i = st.nextToken();
+                        String id = st.nextToken();//id của client nhận thông điệp
+                        i = st.nextToken();//chuỗi chứa tin nhắn
                         try {
+                            //Truyền tin nhắn qua cho client hiển thị
                             new DataOutputStream(((Socket)clientcoll.get(id)).getOutputStream()).writeUTF("< "+ID + " to "+id+" > " + i);
                         } catch (Exception e) {
                             clientcoll.remove(id);
@@ -105,22 +118,7 @@ public class Server extends javax.swing.JFrame {
                             new PrepareClientList().start();
                         }
                     }
-                    else{
-                        Set k = clientcoll.keySet();
-                        Iterator itr = k.iterator();
-                        while(itr.hasNext()){
-                            String key = (String)itr.next();
-                            if(!key.equalsIgnoreCase(ID)){
-                                try {
-                                    new DataOutputStream(((Socket)clientcoll.get(key)).getOutputStream()).writeUTF("< "+ID + " to All > " + i);
-                                } catch (Exception e) {
-                                    clientcoll.remove(key);
-                                    msgBox.append(key + ": removed!\n");
-                                    new PrepareClientList().start();
-                                }
-                            }
-                        }
-                    }
+                    
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -128,6 +126,7 @@ public class Server extends javax.swing.JFrame {
         }
     }
     
+    //Danh sách các client tham gia kết nối
     class PrepareClientList extends Thread{
         public void run(){
             try {
@@ -143,9 +142,12 @@ public class Server extends javax.swing.JFrame {
                     itr = k.iterator();
                     while(itr.hasNext()){
                         String key = (String)itr.next();
+                        //Truyền thông điệp cho client, thông điệp bao gồm mã ":;.,/=" và id của client
                         try {
                             new DataOutputStream(((Socket)clientcoll.get(key)).getOutputStream()).writeUTF(":;.,/=" + ids);
                         } catch (Exception e) {
+                            //Nếu xuất hiện ngoại lệ có nghĩa là client đã đóng kết nối
+                            //Cần xóa giá trị id của client trong Map và ghi ra thông báo
                             clientcoll.remove(key);
                             msgBox.append(key + ": removed!\n");
                         }
@@ -164,7 +166,7 @@ public class Server extends javax.swing.JFrame {
      * regenerated by the Form Editor.
      */
     @SuppressWarnings("unchecked")
-    // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
+    // <editor-fold defaultstate="collapsed" desc="Generated Code">                          
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
@@ -233,7 +235,7 @@ public class Server extends javax.swing.JFrame {
         );
 
         pack();
-    }// </editor-fold>//GEN-END:initComponents
+    }// </editor-fold>                        
 
     /**
      * @param args the command line arguments
@@ -270,12 +272,12 @@ public class Server extends javax.swing.JFrame {
         });
     }
 
-    // Variables declaration - do not modify//GEN-BEGIN:variables
+    // Variables declaration - do not modify                     
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTextArea msgBox;
     private javax.swing.JLabel sStatus;
-    // End of variables declaration//GEN-END:variables
+    // End of variables declaration                   
 }
