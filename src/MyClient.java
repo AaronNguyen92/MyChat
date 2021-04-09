@@ -24,8 +24,8 @@ import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 import javax.swing.*;
 
+public class MyClient extends javax.swing.JFrame {
 
-public class MyClient extends javax.swing.JFrame {    
     String iD, clientID = "";
     DataInputStream din;
     DataOutputStream dout;
@@ -33,22 +33,20 @@ public class MyClient extends javax.swing.JFrame {
     static Box vertical = Box.createVerticalBox();
     ImageIcon user_login_image;
     String string_remove = "";
-    
-    
+
     /**
      * Creates new form MyClient
      */
     public MyClient() {
         initComponents();
-     
+
     }
 
     MyClient(String i, Socket s, ImageIcon img) {
         iD = i;
         try {
             initComponents();
-                        
-            
+
             user_login_image = img;
             ImageIcon img60x60 = new ImageIcon(img.getImage().getScaledInstance(60, 60, Image.SCALE_SMOOTH));
             jLabel_avatar1.setIcon(img60x60);
@@ -58,55 +56,61 @@ public class MyClient extends javax.swing.JFrame {
 
             din = new DataInputStream(s.getInputStream());
             dout = new DataOutputStream(s.getOutputStream());
-  
+
             new Read().start();
-            
+
         } catch (Exception e) {
             e.printStackTrace();
         }
-        
-        
+
     }
     
-    class Read extends Thread{
-        public void run(){
-            
-            while(true){
-                try{
+    //Tạo luồng để đọc tin nhắn từ server
+    class Read extends Thread {
+
+        public void run() {
+
+            while (true) {
+                try {
+                    //Đọc tin nhắn
                     String m = din.readUTF();
-                    if(m.contains(":;.,/=")){
+                    if (m.contains(":;.,/=")) {
                         m = m.substring(6);
                         dlm.clear();
+                        //Tách chuỗi ra từng phần với dấu phân cách (",")
                         StringTokenizer st = new StringTokenizer(m, ",");
-                        while(st.hasMoreTokens()){
+                        while (st.hasMoreTokens()) {
                             String u = st.nextToken();
-                            if(!iD.equals(u)){
+                            if (!iD.equals(u)) {
                                 //Sửa lại đường dẫn cho phù hợp với đường dẫn project trên máy tính của bạn
                                 ImageIcon img_selected_show = new ImageIcon("C:\\Users\\DELL\\Documents\\NetBeansProjects\\MyChat\\src\\avatarUser\\" + u + ".png");
                                 ImageIcon img50x50_selected_show = new ImageIcon(img_selected_show.getImage().getScaledInstance(50, 50, Image.SCALE_SMOOTH));
                                 dlm.addElement(new ImgsNText(u, img50x50_selected_show));
-                                
+
                             }
-                            
+
                         }
                         dlm_removed = dlm;
+                        //Tạo đối tượng Renderer mới và đặt lại nó trong UL để nó hiển thị các thành phần của UL
                         UL.setCellRenderer(new Renderer());
                         UL.setModel(dlm);
+                        //tính toán lại bố cục các thành phần của UL và vẽ nó lại
                         UL.revalidate();
                         UL.repaint();
-                        
+
                     }
-                    else if(m.contains("hjgfshudssbjj89098AFCB")){
-                        String u1 = m.substring(0,m.indexOf("hjgfshudssbjj89098AFCB")-1);
+                    //Nhận thông báo rồi khỏi nhóm chat
+                    else if (m.contains("hjgfshudssbjj89098AFCB")) {
+                        String u1 = m.substring(0, m.indexOf("hjgfshudssbjj89098AFCB") - 1);
                         jLabel_avatar2.setIcon(null);
                         idlabel_user_selected.setText("");
                         idlabel_online_status.setText("");
                         int id_remove = 0;
-                        for (int i = dlm.getSize()-1; i >=0; i--) {
-                            String name_index = ((ImgsNText)dlm.getElementAt(i)).getName();
-                            if(name_index.equalsIgnoreCase(u1)){
+                        for (int i = dlm.getSize() - 1; i >= 0; i--) {
+                            String name_index = ((ImgsNText) dlm.getElementAt(i)).getName();
+                            if (name_index.equalsIgnoreCase(u1)) {
                                 id_remove = i;
-                            } 
+                            }
                         }
                         dlm_removed.removeElementAt(id_remove);
                         UL.removeAll();
@@ -114,21 +118,19 @@ public class MyClient extends javax.swing.JFrame {
                         UL.setModel(dlm_removed);
                         UL.revalidate();
                         UL.repaint();
-                    }
-                    else{
+                    } else {
                         string_remove = "";
                         JPanel p6 = new JPanel();
                         p6.setBackground(Color.WHITE);
                         p6.setLayout(new FlowLayout(FlowLayout.LEFT));
                         JPanel p7 = new JPanel();
                         p7.setLayout(new BoxLayout(p7, BoxLayout.Y_AXIS));
-                        String str1 = m.substring(m.indexOf("> ")+1)+"\n";
-                        String str2 = m.substring(2, m.indexOf("to")-1);
+                        String str1 = m.substring(m.indexOf("> ") + 1) + "\n";//chuỗi tin nhắn
+                        String str2 = m.substring(2, m.indexOf("to") - 1);//username của đối tượng nhận
                         JLabel lbl9 = new JLabel();
-                        if(str1.length()>50){
+                        if (str1.length() > 50) {
                             lbl9.setText("<html><p style= \"width: 200px\" >" + str1 + "</p></html>");
-                        }
-                        else{
+                        } else {
                             lbl9.setText(str1);
                         }
                         JLabel lbl10 = new JLabel();
@@ -141,6 +143,7 @@ public class MyClient extends javax.swing.JFrame {
                         lbl9.setOpaque(true);
                         lbl9.setForeground(Color.BLACK);
                         lbl9.setBorder(new EmptyBorder(10, 10, 3, 20));
+                        //Hiển thị thời gian trong ô tin nhắn
                         Calendar cal1 = Calendar.getInstance();
                         SimpleDateFormat sdf1 = new SimpleDateFormat("HH:mm");
                         JLabel lbl8 = new JLabel();
@@ -157,23 +160,24 @@ public class MyClient extends javax.swing.JFrame {
                         vertical.add(left1);
                         panelShowMSG.add(vertical);
                         panelShowMSG.revalidate();
-                        panelShowMSG.repaint(); 
+                        panelShowMSG.repaint();
                     }
-                    
-                }catch(Exception e){
+
+                } catch (Exception e) {
                     break;
                     //e.printStackTrace();
                 }
             }
         }
     }
-    
-    
+
+    //Khai báo lớp ImgsNText bao gồm cả ảnh và Text
     public class ImgsNText {
-    private String name;
+
+        private String name;
         private Icon img;
-        
-        public ImgsNText(String name, Icon img){
+
+        public ImgsNText(String name, Icon img) {
             this.name = name;
             this.img = img;
         }
@@ -193,35 +197,35 @@ public class MyClient extends javax.swing.JFrame {
         public void setImg(Icon img) {
             this.img = img;
         }
-}
-
+    }
     
-    public class Renderer extends DefaultListCellRenderer implements ListCellRenderer<Object>{
+    //Cài đặt lại đối tượng Renderer để hiển thị nội dung bao gồm Text và ảnh bên trong 1 UL
+    //Ghi đè lại phương thức getListCellRendererComponent để hiển thị theo mong muốn
+    public class Renderer extends DefaultListCellRenderer implements ListCellRenderer<Object> {
 
         @Override
         public Component getListCellRendererComponent(JList<?> list, Object value, int index, boolean isSelected, boolean cellHasFocus) {
             //return super.getListCellRendererComponent(list, value, index, isSelected, cellHasFocus); //To change body of generated methods, choose Tools | Templates.
-        
+
             ImgsNText is = (ImgsNText) value;
             setText(is.getName());
             setIcon(is.getImg());
-            
-            if(isSelected){
+
+            if (isSelected) {
                 setBackground(list.getSelectionBackground());
                 setForeground(list.getSelectionForeground());
-            }
-            else{
+            } else {
                 setBackground(list.getBackground());
                 setForeground(list.getForeground());
             }
-            
+
             setEnabled(true);
             setFont(list.getFont());
             setBorder(BorderFactory.createRaisedBevelBorder());
-            
+
             return this;
         }
-        
+
     }
 
     /**
@@ -230,7 +234,7 @@ public class MyClient extends javax.swing.JFrame {
      * regenerated by the Form Editor.
      */
     @SuppressWarnings("unchecked")
-    // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
+    // <editor-fold defaultstate="collapsed" desc="Generated Code">                          
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
@@ -381,18 +385,18 @@ public class MyClient extends javax.swing.JFrame {
         );
 
         pack();
-    }// </editor-fold>//GEN-END:initComponents
+    }// </editor-fold>                        
 
-    
-    private void sendTextActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sendTextActionPerformed
-        
-    }//GEN-LAST:event_sendTextActionPerformed
 
-    private void sendButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sendButtonActionPerformed
+    private void sendTextActionPerformed(java.awt.event.ActionEvent evt) {                                         
+
+    }                                        
+
+    private void sendButtonActionPerformed(java.awt.event.ActionEvent evt) {                                           
         try {
             String m = sendText.getText(), mm = m;
             String CI = clientID;
-            
+
             m = "#434556@@@@@554999@@" + CI + ":" + mm;
             dout.writeUTF(m);
             sendText.setText("");
@@ -402,12 +406,11 @@ public class MyClient extends javax.swing.JFrame {
             p3.setLayout(new FlowLayout(FlowLayout.LEFT));
             JPanel p4 = new JPanel();
             p4.setLayout(new BoxLayout(p4, BoxLayout.Y_AXIS));
-            String str3 = ""+mm + "\n";
+            String str3 = "" + mm + "\n";
             JLabel lbl5 = new JLabel();
             if (str3.length() > 50) {
                 lbl5.setText("<html><p style= \"width: 200px\" >" + str3 + "</p></html>");
-            } 
-            else {
+            } else {
                 lbl5.setText(str3);
             }
             JLabel lbl6 = new JLabel();
@@ -440,42 +443,41 @@ public class MyClient extends javax.swing.JFrame {
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, "User doesn't exist anymore!");
         }
-    }//GEN-LAST:event_sendButtonActionPerformed
+    }                                          
 
-    private void ULValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_ULValueChanged
-        clientID = ((ImgsNText)(UL.getSelectedValue())).getName(); 
-        
+    private void ULValueChanged(javax.swing.event.ListSelectionEvent evt) {                                
+        clientID = ((ImgsNText) (UL.getSelectedValue())).getName();
+
         idlabel_user_selected.setText(clientID);
-        ImageIcon img_selected = (ImageIcon)((ImgsNText)(UL.getSelectedValue())).getImg();
+        ImageIcon img_selected = (ImageIcon) ((ImgsNText) (UL.getSelectedValue())).getImg();
         ImageIcon img60x60_online = new ImageIcon(img_selected.getImage().getScaledInstance(60, 60, Image.SCALE_SMOOTH));
         jLabel_avatar2.setIcon(img60x60_online);
         jLabel_avatar2.setSize(70, 70);
-        
-        idlabel_online_status.setText("online");
-        
-    }//GEN-LAST:event_ULValueChanged
 
-    private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
+        idlabel_online_status.setText("online");
+
+    }                               
+
+    private void formWindowClosing(java.awt.event.WindowEvent evt) {                                   
         String i = "hjgfshudssbjj89098AFCB";
 
         try {
             dout.writeUTF(i);
             this.dispose();
-        }catch(IOException e){
+        } catch (IOException e) {
             Logger.getLogger(MyClient.class.getName()).log(Level.SEVERE, null, e);
         }
-    }//GEN-LAST:event_formWindowClosing
+    }                                  
 
-    private void ULMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ULMouseClicked
-        
-    }//GEN-LAST:event_ULMouseClicked
+    private void ULMouseClicked(java.awt.event.MouseEvent evt) {                                
+
+    }                               
 
     /**
      * @param args the command line arguments
      */
-    
 
-    // Variables declaration - do not modify//GEN-BEGIN:variables
+    // Variables declaration - do not modify                     
     private javax.swing.JList UL;
     private javax.swing.JLabel idlabel;
     private javax.swing.JLabel idlabel_online_status;
@@ -491,5 +493,5 @@ public class MyClient extends javax.swing.JFrame {
     private javax.swing.JPanel panelShowMSG;
     private javax.swing.JButton sendButton;
     private javax.swing.JTextField sendText;
-    // End of variables declaration//GEN-END:variables
+    // End of variables declaration                   
 }
